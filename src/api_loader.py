@@ -41,3 +41,25 @@ def process_data(data, symbol):
     df["ticker"] = symbol
 
     return df
+
+
+def load_market_data(tickers):
+    all_data = []
+
+    for ticker in tickers:
+        print(f"Загружаю {ticker}")
+
+        data = get_daily_data(ticker)
+        if data is None:
+            continue
+
+        df = process_data(data, ticker)
+        all_data.append(df)
+
+        time.sleep(12)
+
+    if len(all_data) == 0:
+        print("Нет данных")
+        return None
+
+    return pd.concat(all_data)
