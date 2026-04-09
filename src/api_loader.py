@@ -26,3 +26,18 @@ def get_daily_data(symbol):
         return None
 
     return data
+
+
+def process_data(data, symbol):
+    ts = data["Time Series (Daily)"]
+
+    df = pd.DataFrame(ts).T
+    df.index = pd.to_datetime(df.index)
+    df = df.sort_index()
+
+    df.columns = ["open", "high", "low", "close", "volume"]
+    df = df.astype(float)
+
+    df["ticker"] = symbol
+
+    return df
