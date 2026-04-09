@@ -63,3 +63,8 @@ def load_market_data(tickers):
         return None
 
     return pd.concat(all_data)
+
+
+def save_data(df, path):
+    df.to_csv(path)
+    print("Сохранили в файл")
