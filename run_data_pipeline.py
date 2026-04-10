@@ -12,3 +12,15 @@ if market_df is not None:
     print("Рыночные данные сохранены")
 else:
     print("Ошибка рынка")
+
+
+# Выгрузка индикаторов для тикера XOM
+print("\nЗагружаем индикаторы...")
+
+ind_df = load_indicators("XOM")
+
+if ind_df is not None:
+    save_data(ind_df, "data/raw/indicators_xom.csv")
+    print("Индикаторы сохранены")
+else:
+    print("Ошибка индикаторов")
