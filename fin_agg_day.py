@@ -57,3 +57,7 @@ def day_metrics(df):
     #ATTENTION: шаг ниже позволяет выбрать наиболее релевантные колонки в файл. Регулируется при необходимости
     df_gr_day=df_gr_day[["financial_share","fin_pos_share_count","fin_neg_share_count","fin_neu_share_count","fin_pos_share","fin_neg_share","fin_neu_share"]]
     return(df_gr_day)
+
+df_pr = pd.read_csv('df_process.csv')
+df_pr = day_metrics(df_pr)
+df_pr.reset_index().to_csv("df_agg.csv", index=True)
