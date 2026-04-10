@@ -1,6 +1,5 @@
 import pandas as pd
-pd.set_option('display.max_colwidth', None)
-df = pd.read_csv('/Users/perevalovasofia/Documents/вшэ/2025-2026/смадимо/ГП 2/parser_news_4.csv')
+df = pd.read_csv('enrich_finbert1.csv')
 
 def duplicate_function (df):
     df = df.drop_duplicates()
@@ -23,3 +22,11 @@ def na (df):
 def stip_simbols(df):
     df['title']= df['title'].str.strip()
     df['description'] = df['description'].str.strip()
+    return df
+
+df = duplicate_function(df)
+df = data_upd(df)
+df = na(df)
+df = stip_simbols(df)
+
+df.reset_index().to_csv("df_process.csv", index=True)
