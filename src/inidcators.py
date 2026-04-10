@@ -27,3 +27,26 @@ def get_rsi(symbol):
     df = df.astype(float)
 
     return df
+
+
+def get_sma(symbol):
+    params = {
+        "function": "SMA",
+        "symbol": symbol,
+        "interval": "daily",
+        "time_period": 14,
+        "series_type": "close",
+        "apikey": API_KEY
+    }
+
+    response = requests.get(BASE_URL, params=params)
+    data = response.json()
+
+    df = pd.DataFrame(data["Technical Analysis: SMA"]).T
+    df.index = pd.to_datetime(df.index)
+    df = df.sort_index()
+
+    df.columns = ["sma"]
+    df = df.astype(float)
+
+    return df
