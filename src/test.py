@@ -1,17 +1,9 @@
-import re
-import time
-import random
-import shutil
 import pandas as pd
 
-from tqdm.auto import tqdm
 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import TimeoutException, WebDriverException
+
 
 def create_driver():
     options = webdriver.ChromeOptions()
@@ -26,15 +18,11 @@ def create_driver():
 
 def parse_all(driver):
     all_rows = []
-    dates = pd.date_range(start="2026-04-06", end="2026-04-08", freq="D")
-
-    # перебираем даты
+    dates = pd.date_range(start="2025-11-01", end="2026-04-08", freq="D")
 
     for current_date in dates:
         year_month = current_date.strftime("%Y-%m")
         day = current_date.strftime("%d")
-
-        # перебираем страницы сайта в каждой дате
 
         for page_num in range(1, 4):
             url = f"{BASE_URL}/sitemap/{year_month}/{day}/{page_num}/"
@@ -47,8 +35,6 @@ def parse_all(driver):
 
             if len(cards) == 0:
                 break
-
-            # вытащили блоки, один блок - одна строка в целевом файле
 
             for card in cards:
                 card_time_text = card.find_element(By.CSS_SELECTOR, "[data-testid='DateLineText']").text.strip()
@@ -87,3 +73,18 @@ def parse_all(driver):
                 })
 
     return all_rows
+
+
+def main():
+    driver = create_driver()
+
+    rows = parse_all(driver)
+    df = pd.DataFrame(rows)
+
+    print(df.shape)
+    print(df.head(10))
+
+    df.to_csv(OUTPUT_FILE, index=False, encoding="utf-8-sig")
+
+    input("")
+    driver.quit()
