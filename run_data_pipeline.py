@@ -24,3 +24,15 @@ if ind_df is not None:
     print("Индикаторы сохранены")
 else:
     print("Ошибка индикаторов")
+
+
+# Выгрузка валютных изменений
+print("\nЗагружаем макро данные...")
+
+macro_df = get_usd_eur_daily()
+
+if macro_df is not None:
+    save_data(macro_df, "data/raw/macro_usd.csv")
+    print("Макро данные сохранены")
+else:
+    print("Ошибка макро данных")
