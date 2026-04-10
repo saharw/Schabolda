@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-
+#df = pd.read_csv('enrich_finbert1.csv')
 def day_metrics(df):
     #подготовка df: создание тоталов по кол-ву позитивных, нейтральных и негативных новостей в разрезе:
     #все новости и финансовые новости (В, Ф)
@@ -57,4 +57,3 @@ def day_metrics(df):
     #ATTENTION: шаг ниже позволяет выбрать наиболее релевантные колонки в файл. Регулируется при необходимости
     df_gr_day=df_gr_day[["financial_share","fin_pos_share_count","fin_neg_share_count","fin_neu_share_count","fin_pos_share","fin_neg_share","fin_neu_share"]]
     return(df_gr_day)
-
